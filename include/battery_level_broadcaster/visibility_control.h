@@ -1,0 +1,35 @@
+#ifndef BATTERY_LEVEL_BROADCASTER__VISIBILITY_CONTROL_H_
+#define BATTERY_LEVEL_BROADCASTER__VISIBILITY_CONTROL_H_
+
+// This logic was borrowed (then namespaced) from the examples on the gcc wiki:
+//     https://gcc.gnu.org/wiki/Visibility
+
+#if defined _WIN32 || defined __CYGWIN__
+#ifdef __GNUC__
+#define BATTERY_LEVEL_BROADCASTER_EXPORT __attribute__((dllexport))
+#define BATTERY_LEVEL_BROADCASTER_IMPORT __attribute__((dllimport))
+#else
+#define BATTERY_LEVEL_BROADCASTER_EXPORT __declspec(dllexport)
+#define BATTERY_LEVEL_BROADCASTER_IMPORT __declspec(dllimport)
+#endif
+#ifdef BATTERY_LEVEL_BROADCASTER_BUILDING_DLL
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC BATTERY_LEVEL_BROADCASTER_EXPORT
+#else
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC BATTERY_LEVEL_BROADCASTER_IMPORT
+#endif
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC_TYPE BATTERY_LEVEL_BROADCASTER_PUBLIC
+#define BATTERY_LEVEL_BROADCASTER_LOCAL
+#else
+#define BATTERY_LEVEL_BROADCASTER_EXPORT __attribute__((visibility("default")))
+#define BATTERY_LEVEL_BROADCASTER_IMPORT
+#if __GNUC__ >= 4
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC __attribute__((visibility("default")))
+#define BATTERY_LEVEL_BROADCASTER_LOCAL __attribute__((visibility("hidden")))
+#else
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC
+#define BATTERY_LEVEL_BROADCASTER_LOCAL
+#endif
+#define BATTERY_LEVEL_BROADCASTER_PUBLIC_TYPE
+#endif
+
+#endif // BATTERY_LEVEL_BROADCASTER__VISIBILITY_CONTROL_H_

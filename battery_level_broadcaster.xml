@@ -1,0 +1,9 @@
+<library path="battery_level_broadcaster">
+    <class name="netizen_robotics/BatteryLevelBroadcaster"
+        type="netizen_robotics::BatteryLevelBroadcaster"
+        base_class_type="controller_interface::ControllerInterface">
+        <description>
+            Controller to publish battery sensor message.
+        </description>
+    </class>
+</library>

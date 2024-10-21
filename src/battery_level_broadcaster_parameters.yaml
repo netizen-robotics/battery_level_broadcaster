@@ -1,0 +1,41 @@
+battery_level_broadcaster:
+  battery_name:
+    {
+      type: string,
+      default_value: "",
+      description: "Name of the battery. Will be use as prefix for all the interfaces.",
+      validation: { not_empty<>: null },
+    }
+  cell_count:
+    {
+      type: int,
+      default_value: 1,
+      description: "The number of cells in the battery.",
+      validation: { gt<>: [0] },
+    }
+  serial_number:
+    {
+      type: string,
+      default_value: "",
+      description: "Serial number of the battery.",
+    }
+  design_capacity:
+    {
+      type: double,
+      default_value: 0.0,
+      description: "Design capacity in Ah, if unmeasured or unknown set to 0)",
+      validation: { gt<>: [0.0] },
+    }
+  location:
+    {
+      type: string,
+      default_value: "",
+      description: "The location into which the battery is inserted. (slot number or plug)",
+    }
+  power_supply_technology:
+    {
+      type: int,
+      default_value: 0,
+      description: "The technology used by the battery. (Li-ion, Ni-MH, etc.)",
+      validation: { bounds<>: [0, 6] },
+    }
