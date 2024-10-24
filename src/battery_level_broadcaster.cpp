@@ -48,9 +48,10 @@ namespace netizen_robotics
         realtime_publisher_->msg_.location = params_.location;
         realtime_publisher_->msg_.design_capacity = design_capacity;
         realtime_publisher_->msg_.power_supply_technology = params_.power_supply_technology;
-        for (auto i = 0u; i < params_.cell_count; ++i)
+        for (uint i = 0u; i < params_.cell_count; i++)
         {
             realtime_publisher_->msg_.cell_voltage.push_back(std::numeric_limits<double>::quiet_NaN());
+            realtime_publisher_->msg_.cell_temperature.push_back(std::numeric_limits<double>::quiet_NaN());
         }
         realtime_publisher_->unlock();
 

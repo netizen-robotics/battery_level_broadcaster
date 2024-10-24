@@ -9,7 +9,7 @@ namespace netizen_robotics
     {
     public:
         explicit BatterySensor(const std::string &name, uint8_t cell_count = 1)
-            : semantic_components::SemanticComponentInterface<sensor_msgs::msg::BatteryState>(name, cell_count + 8)
+            : semantic_components::SemanticComponentInterface<sensor_msgs::msg::BatteryState>(name, 2 * cell_count + 8)
         {
             cell_count_ = cell_count;
             interface_names_.emplace_back(name_ + "/" + "voltage");
@@ -20,8 +20,10 @@ namespace netizen_robotics
             interface_names_.emplace_back(name_ + "/" + "power_supply_status");
             interface_names_.emplace_back(name_ + "/" + "power_supply_health");
             interface_names_.emplace_back(name_ + "/" + "present");
-            for (auto i = 0u; i < cell_count_; ++i)
-                interface_names_.emplace_back(name_ + "/" + "cell_voltage_" + std::to_string(i + 1));
+            for (uint i = 1u; i <= cell_count_; i++)
+                interface_names_.emplace_back(name_ + "/" + "cell_voltage_" + std::to_string(i));
+            for (uint i = 1u; i <= cell_count_; i++)
+                interface_names_.emplace_back(name_ + "/" + "cell_temperature_" + std::to_string(i));
         }
 
         virtual ~BatterySensor() = default;
@@ -36,12 +38,16 @@ namespace netizen_robotics
             message.power_supply_status = static_cast<uint8_t>(state_interfaces_[5].get().get_value());
             message.power_supply_health = static_cast<uint8_t>(state_interfaces_[6].get().get_value());
             message.present = state_interfaces_[7].get().get_value() > 0.0;
-
-            for (auto i = 0u; i < cell_count_; ++i)
+            uint index = 8;
+            for (uint i = 0u; i < cell_count_; i++)
             {
-                message.cell_voltage[i] = static_cast<float>(state_interfaces_[8 + i].get().get_value());
+                message.cell_voltage[i] = static_cast<float>(state_interfaces_[index + i].get().get_value());
             }
-
+            index += cell_count_;
+            for (uint i = 0u; i < cell_count_; i++)
+            {
+                message.cell_temperature[i] = static_cast<float>(state_interfaces_[index + i].get().get_value());
+            }
             return true;
         }
 
