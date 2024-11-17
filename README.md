@@ -56,12 +56,14 @@ battery_broadcaster_spawner = Node(
 )
 ```
 
-License
+## License
+
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-Contributing
+## Contributing
+
 Contributions are welcome! Please open an issue or submit a pull request.
 
-Authors
+## Authors
 
-[Danny Ng](https://github.com/dannyngweekia)
+- [Danny Ng](https://github.com/dannyngweekia)
