@@ -63,4 +63,5 @@ Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
 
 Authors
+
 [Danny Ng](https://github.com/dannyngweekia)
